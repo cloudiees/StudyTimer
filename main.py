@@ -2,6 +2,9 @@ import customtkinter
 import psutil
 import subprocess
 from playsound import playsound
+import ctypes
+import pygetwindow as gw
+import blconfig
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -211,55 +214,6 @@ def hideTimer():
         timerDisp.configure(text="")
         timerDisp.update()
 
-# Validates if said process actually exists/is valid
-def validateProcess(input, feedbackObj, blLabel):
-    if input == "":
-        feedbackObj.configure(text="Please Enter Something", text_color="yellow")
-    elif (input in (i.name() for i in psutil.process_iter())):
-        feedbackObj.configure(text="Process Added!", text_color="green")
-        blacklist.add(input)
-        updateBl(blLabel)
-    else:
-        feedbackObj.configure(text="Process Not Found", text_color="red")
-
-# Updates the blacklist label
-def updateBl(blLabel):
-    label = ""
-    for i in blacklist:
-        label += "- " + i + "\n"
-    blLabel.configure(text=label)
-
-# Kills configurator
-def killConfig(test):
-    configureApps.configure(state="normal")
-    test.destroy()
-
-# Adds items to blacklist
-def openConfigurator():
-    # Initializing all the widgets
-    configureApps.configure(state="disabled")
-    configurator = customtkinter.CTkToplevel(app)
-    configurator.title("Blacklist Config")
-    configurator.geometry("300x300")
-    configurator.protocol("WM_DELETE_WINDOW", lambda: killConfig(configurator))
-    configurator.grid_columnconfigure(0, weight=1)
-    configLabel = customtkinter.CTkLabel(configurator, text="Enter the blacklisted application's process name\nNote that the process must be open")
-    configLabel.grid(columnspan=2, row=0, pady=20)
-    configEntry = customtkinter.CTkEntry(configurator, placeholder_text="")
-    configEntry.grid(columnspan=2, row=1)
-    currBlacklist = customtkinter.CTkScrollableFrame(configurator, label_anchor="nw", label_text="Current Blacklisted Proccesses:", width=300)
-    currBlacklist.grid_columnconfigure(0, weight=1)
-    currBlacklist.grid(columnspan=5, row=4)
-    blLabel = customtkinter.CTkLabel(currBlacklist, text="", justify="left")
-    updateBl(blLabel)
-    feedback = customtkinter.CTkLabel(configurator, text="")
-    configBut = customtkinter.CTkButton(configurator, text="Submit", command=lambda: validateProcess(configEntry.get(), feedback, blLabel))
-    configBut.grid(columnspan=2, row=2, pady=20)
-    feedback.grid(columnspan=2, row=3)
-    blLabel.grid(row=0, columnspan=5)
-    configurator.focus()
-    
-
 # Initializing all the widgets
 reg =  app.register(validateNum)
 sendHelp = customtkinter.CTkLabel(app, text="")
@@ -280,7 +234,7 @@ showTimerCb = customtkinter.CTkCheckBox(frameB, text="Hide timer", command=hideT
 extremistCb = customtkinter.CTkCheckBox(frameB, text="Extremist Mode")
 showTimerCb.grid(row=2, column=0, padx=40,pady=10)
 extremistCb.grid(row=2, column=1, padx=40)
-configureApps = customtkinter.CTkButton(app, text="Configure Blacklisted Applications", command=openConfigurator)
+configureApps = customtkinter.CTkButton(app, text="Configure Blacklisted Applications", command=lambda: blconfig.openConfigurator(configureApps, blacklist, app))
 configureApps.grid(row=3)
 blacklist = set()
 

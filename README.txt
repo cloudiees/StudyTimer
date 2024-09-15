@@ -4,7 +4,7 @@ Author: I.S.
 
 NOTE: This application is only Windows compatible since it uses Powershell scripts.
 
-This mini-project was made for the AppleHacks hackathon. The reason I chose a timer specifically is because sometimes I forget to take breaks while studying or working, or sometimes I take too long of breaks, this helps with that.
+This mini-project was made for the Apple Hacks hackathon. The reason I chose a timer specifically is because sometimes I forget to take breaks while studying or working, or sometimes I take too long of breaks, this helps with that.
 
 I actually learned quite a lot from this project, this is my first time making a GUI application with Python, despite being a 3rd year CS student... actually now that I think about it this is the first time I've made a GUI application since I got into my uni... Welp at least I have some experience now! Also one thing I'm really unsatisfied with is I couldn't figure out is how to make popups actually popup over fullscreen application, so I had to change my approach to spamming the user with audio instead of popups malware style lol. Although, I'm kinda hyped that I figured out how to kill the processes correctly with Powershell scripts, I find that super cool. Customtkinter was "fun" to work with. Tbh I never really figured out how to make a coherant GUI with it, just kinda slapped things together and called it a day. However, like I said before, first time making a GUI application so it was an experience and I had a lot of fun coding it. 
 
